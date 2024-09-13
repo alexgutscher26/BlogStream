@@ -53,7 +53,7 @@ export const HeroSection = () => {
               className="w-5/6 md:w-1/4 font-bold transition transform hover:scale-105 hover:bg-gray-600"
             >
               <Link
-                href="https://github.com/nobruf/shadcn-landing-page.git"
+                href="https://github.com/alexgutscher26/BlogStream.git"
                 target="_blank"
               >
                 Github repository
