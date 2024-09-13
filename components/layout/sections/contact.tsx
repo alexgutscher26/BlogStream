@@ -5,7 +5,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Building2, Clock, Mail, Phone } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -50,9 +49,12 @@ export const ContactSection = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { firstName, lastName, email, subject, message } = values;
-    console.log(values);
 
-    const mailToLink = `mailto:leomirandadev@gmail.com?subject=${subject}&body=Hello I am ${firstName} ${lastName}, my Email is ${email}. %0D%0A${message}`;
+    // Encode the values to prevent issues with special characters
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedMessage = encodeURIComponent(`Hello I am ${firstName} ${lastName}, my Email is ${email}. %0D%0A${message}`);
+    
+    const mailToLink = `mailto:madajoe6969@gmail.com?subject=${encodedSubject}&body=${encodedMessage}`;
 
     window.location.href = mailToLink;
   }
@@ -75,7 +77,7 @@ export const ContactSection = () => {
         </div>
 
         <Card className="bg-muted/60 dark:bg-card">
-          <CardHeader className="text-primary text-2xl"> </CardHeader>
+          <CardHeader className="text-primary text-2xl"></CardHeader>
           <CardContent>
             <Form {...form}>
               <form
@@ -139,8 +141,8 @@ export const ContactSection = () => {
                       <FormItem>
                         <FormLabel>Subject</FormLabel>
                         <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          value={field.value}
+                          onValueChange={(value) => field.onChange(value)}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -184,7 +186,6 @@ export const ContactSection = () => {
                             {...field}
                           />
                         </FormControl>
-
                         <FormMessage />
                       </FormItem>
                     )}
