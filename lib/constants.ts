@@ -28,4 +28,4 @@ export const plansMap = [
 export const ORIGIN_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : "";
+    : "https://blog-stream-pbitjwice-alexs-projects-f6178030.vercel.app";
