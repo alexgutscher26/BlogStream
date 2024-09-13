@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { ChevronsDownIcon } from "lucide-react";
+import { ChevronsDownIcon, Ghost } from "lucide-react";
 import Link from "next/link";
 
 export const FooterSection = () => {
@@ -8,11 +8,10 @@ export const FooterSection = () => {
       <div className="p-10 bg-card border border-secondary rounded-2xl">
         <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
           <div className="col-span-full xl:col-span-2">
-            <Link href="#" className="flex font-bold items-center">
-              <ChevronsDownIcon className="w-9 h-9 mr-2 bg-gradient-to-tr from-primary via-primary/70 to-primary rounded-lg border border-secondary" />
-
-              <h3 className="text-2xl">Shadcn</h3>
-            </Link>
+          <span className="flex items-center gap-2 shrink-0">
+              <Ghost className="transition-transform transform hover:rotate-12 duration-300 ease-in-out" />
+              <span className="font-extrabold text-lg">BlogStream</span>
+            </span>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -60,8 +59,8 @@ export const FooterSection = () => {
           <div className="flex flex-col gap-2">
             <h3 className="font-bold text-lg">Help</h3>
             <div>
-              <Link href="#" className="opacity-60 hover:opacity-100">
-                Contact Us
+              <Link href="https://blogstream.betteruptime.com" className="opacity-60 hover:opacity-100">
+                Status
               </Link>
             </div>
 
@@ -103,13 +102,13 @@ export const FooterSection = () => {
         <Separator className="my-6" />
         <section className="">
           <h3 className="">
-            &copy; 2024 Designed and developed by
+            &copy; 2024 developed by
             <Link
               target="_blank"
-              href="https://github.com/leoMirandaa"
+              href="https://github.com/alexgutscher26/BlogStream.git"
               className="text-primary transition-all border-primary hover:border-b-2 ml-1"
             >
-              Leo Miranda
+              BlogStream
             </Link>
           </h3>
         </section>

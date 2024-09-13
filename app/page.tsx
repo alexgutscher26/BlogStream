@@ -11,13 +11,13 @@ import { SponsorsSection } from "@/components/layout/sections/sponsors";
 import { TestimonialSection } from "@/components/layout/sections/testimonial";
 
 export const metadata = {
-  title: "BlogStream - Streamline video-to-blog.",
+  title: "BlogStream - Streamline video-to-blog",
   description:
     "BlogStream is an innovative SaaS platform that automatically converts your videos into engaging, SEO-optimized blog posts. Using advanced AI, BlogStream transcribes your video content, organizes it into a clear, readable structure, and enhances it with relevant keywords, headings, and formatting.",
   openGraph: {
     type: "website",
     url: "https://blogstream.com",
-    title: "BlogStream - Streamline video-to-blog.",
+    title: "BlogStream - Streamline video-to-blog",
     description:
       "BlogStream is an innovative SaaS platform that automatically converts your videos into engaging, SEO-optimized blog posts. Using advanced AI, BlogStream transcribes your video content, organizes it into a clear, readable structure, and enhances it with relevant keywords, headings, and formatting.",
     //    images: [
@@ -32,7 +32,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     site: "https://blogstream.com",
-    title: "BlogStream - Streamline video-to-blog.",
+    title: "BlogStream - Streamline video-to-blog",
     description:
       "BlogStream is an innovative SaaS platform that automatically converts your videos into engaging, SEO-optimized blog posts. Using advanced AI, BlogStream transcribes your video content, organizes it into a clear, readable structure, and enhances it with relevant keywords, headings, and formatting.",
     //    images: [

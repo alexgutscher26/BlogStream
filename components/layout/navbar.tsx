@@ -46,7 +46,7 @@ export const Navbar = () => {
           <NavLink href="/">
             <span className="flex items-center gap-2 shrink-0">
               <Ghost className="transition-transform transform hover:rotate-12 duration-300 ease-in-out" />
-              <span className="font-extrabold text-lg">SpeakEasy</span>
+              <span className="font-extrabold text-lg">BlogStream</span>
             </span>
           </NavLink>
         </div>
