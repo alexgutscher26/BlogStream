@@ -1,7 +1,8 @@
+/* eslint-disable react/no-string-refs */
 "use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,40 +17,46 @@ export const HeroSection = () => {
             <span className="mr-2 text-primary">
               <Badge>New</Badge>
             </span>
-            <span> Design is out now! </span>
+            <span> Unlock the Power of Your Videos </span>
           </Badge>
 
           <div className="max-w-screen-md mx-auto text-center text-4xl md:text-6xl font-bold">
             <h1>
-              Experience the
-              <span className="text-transparent px-2 bg-gradient-to-r from-[#D247BF] to-primary bg-clip-text">
-                Shadcn
+              Transform Your
+              <span className="text-transparent px-2 bg-gradient-to-r from-[#2587bc] to-primary bg-clip-text">
+                Video Content
               </span>
-              landing page
+              into Engaging Blog Posts with AI
             </h1>
           </div>
 
           <p className="max-w-screen-sm mx-auto text-xl text-muted-foreground">
-            {`We're more than just a tool, we're a community of passionate
-            creators. Get access to exclusive resources, tutorials, and support.`}
+            {`Effortlessly Convert Video Content into Compelling Blog Posts with Cutting-Edge AI Tools`}
           </p>
 
           <div className="space-y-4 md:space-y-0 md:space-x-4">
-            <Button className="w-5/6 md:w-1/4 font-bold group/arrow">
-              Get Started
-              <ArrowRight className="size-5 ml-2 group-hover/arrow:translate-x-1 transition-transform" />
+            <Button 
+              asChild
+              className="w-5/6 md:w-1/4 font-bold transition transform hover:scale-105 hover:bg-blue-600"
+            >
+              <Link
+                href="#pricing"
+                target="_blank"
+              >
+                Get Started
+              </Link>
             </Button>
 
             <Button
               asChild
               variant="secondary"
-              className="w-5/6 md:w-1/4 font-bold"
+              className="w-5/6 md:w-1/4 font-bold transition transform hover:scale-105 hover:bg-gray-600"
             >
               <Link
                 href="https://github.com/nobruf/shadcn-landing-page.git"
                 target="_blank"
               >
-                Github respository
+                Github repository
               </Link>
             </Button>
           </div>
@@ -60,7 +67,7 @@ export const HeroSection = () => {
           <Image
             width={1200}
             height={1200}
-            className="w-full md:w-[1200px] mx-auto rounded-lg relative rouded-lg leading-none flex items-center border border-t-2 border-secondary  border-t-primary/30"
+            className="w-full md:w-[1200px] mx-auto rounded-lg relative leading-none flex items-center border border-t-2 border-secondary border-t-primary/30"
             src={
               theme === "light"
                 ? "/hero-image-light.jpeg"

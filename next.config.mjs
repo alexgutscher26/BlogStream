@@ -16,6 +16,14 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/settings',
+        destination: '/api/settings',  // Rewrite /settings to the backend API route
+      },
+    ];
+  },
 };
 
 export default nextConfig;

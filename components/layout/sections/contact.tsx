@@ -72,47 +72,6 @@ export const ContactSection = () => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
             ipsam sint enim exercitationem ex autem corrupti quas tenetur
           </p>
-
-          <div className="flex flex-col gap-4">
-            <div>
-              <div className="flex gap-2 mb-1">
-                <Building2 />
-                <div className="font-bold">Find us</div>
-              </div>
-
-              <div>742 Evergreen Terrace, Springfield, IL 62704</div>
-            </div>
-
-            <div>
-              <div className="flex gap-2 mb-1">
-                <Phone />
-                <div className="font-bold">Call us</div>
-              </div>
-
-              <div>+1 (619) 123-4567</div>
-            </div>
-
-            <div>
-              <div className="flex gap-2 mb-1">
-                <Mail />
-                <div className="font-bold">Mail US</div>
-              </div>
-
-              <div>leomirandadev@gmail.com</div>
-            </div>
-
-            <div>
-              <div className="flex gap-2">
-                <Clock />
-                <div className="font-bold">Visit us</div>
-              </div>
-
-              <div>
-                <div>Monday - Friday</div>
-                <div>8AM - 4PM</div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <Card className="bg-muted/60 dark:bg-card">
