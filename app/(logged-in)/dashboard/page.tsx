@@ -1,111 +1,100 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import { Badge } from "@/components/ui/badge";
 import UpgradeYourPlan from "@/components/upload/upgrade-your-plan";
 import UploadForm from "@/components/upload/upload-form";
-import getDbConnection from "@/lib/db";
-import {
-  doesUserExist,
-  getPlanType,
-  hasCancelledSubscription,
-  updateUser,
-} from "@/lib/user-helpers";
-import { currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 
-export default async function Dashboard() {
-  const clerkUser = await currentUser();
+interface Post {
+  id: string;
+  title: string;
+  content: string;
+  user_id: string;
+  [key: string]: any;
+}
 
-  if (!clerkUser) {
-    return redirect("/sign-in");
+export default function Dashboard() {
+  const [planData, setPlanData] = useState({ planTypeName: "", isBasicPlan: false, isProPlan: false });
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [isValidBasicPlan, setIsValidBasicPlan] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const { user } = useUser(); // Client-side user
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // If the user object is undefined, redirect to sign-in
+      if (!user) {
+        router.push("/sign-in");
+        return;
+      }
+
+      try {
+        // Fetch data from API route
+        const response = await fetch("/api/get-user-data");
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to fetch user data");
+        }
+
+        const { planTypeName, isBasicPlan, isProPlan, userPosts } = data;
+
+        setPlanData({ planTypeName, isBasicPlan, isProPlan });
+        setPosts(userPosts);
+        setIsValidBasicPlan(isBasicPlan && userPosts.length < 3);
+      } catch (err) {
+        console.error("Error fetching data", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [user, router]);
+
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading state while data is being fetched
   }
-
-  const email = clerkUser?.emailAddresses?.[0].emailAddress ?? "";
-
-  const sql = await getDbConnection().catch((err) => {
-    console.error("Failed to connect to the database:", err);
-  });
-
-  if (!sql) return;
-
-  let userId = null;
-  let priceId = null;
-
-  const hasUserCancelled = await hasCancelledSubscription(sql, email).catch((err) => {
-    console.error("Failed to check if the user has cancelled their subscription:", err);
-  });
-
-  const user = await doesUserExist(sql, email).catch((err) => {
-    console.error("Failed to check if the user exists:", err);
-  });
-
-  if (!user) {
-    console.log("User does not exist in the database.");
-    return;
-  }
-
-  userId = clerkUser?.id;
-  if (userId) {
-    await updateUser(sql, userId, email).catch((err) => {
-      console.error("Failed to update the user ID:", err);
-    });
-    console.log(`Updated user ${email} with ID ${userId}`);
-  }
-
-  priceId = user[0].price_id;
-
-  const { id: planTypeId = "starter", name: planTypeName } = getPlanType(priceId);
-
-  const isBasicPlan = planTypeId === "basic";
-  const isProPlan = planTypeId === "pro";
-
-  const posts = await sql`SELECT * FROM posts WHERE user_id = ${userId}`.catch((err) => {
-    console.error("Failed to fetch posts for the user:", err);
-  });
-
-  if (!posts) {
-    console.log("No posts found for the user.");
-    return;
-  }
-
-  const isValidBasicPlan = isBasicPlan && posts.length < 3;
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
       <div className="flex flex-col items-center justify-center gap-6 text-center">
-        {/* Enhanced Badge Styling */}
-        <Badge className="bg-gradient-to-r from-purple-600 to-pink-700 text-white px-5 py-2 text-lg font-semibold shadow-lg rounded-lg transition-transform transform hover:scale-105">
-          {planTypeName} Plan
-        </Badge>
+        <SignedIn>
+          <Badge className="bg-gradient-to-r from-purple-700 to-pink-800 text-white px-4 py-1 text-lg font-semibold capitalize">
+            {planData.planTypeName} Plan
+          </Badge>
 
-        {/* Heading and Subtext */}
-        <h2 className="capitalize text-3xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
-          Start creating amazing content
-        </h2>
-        <p className="mt-4 text-lg leading-8 text-gray-600 max-w-3xl text-center">
-          Upload your audio or video file and let our AI do the magic!
-        </p>
+          <h2 className="capitalize text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Start creating amazing content
+          </h2>
 
-        {/* Plan Information */}
-        {(isBasicPlan || isProPlan) && (
-          <p className="mt-4 text-lg leading-8 text-gray-600 max-w-2xl text-center fade-in">
-            You get{" "}
-            <span className="font-bold text-amber-600 bg-amber-100 px-3 py-1 rounded-md">
-              {isBasicPlan ? "3" : "Unlimited"} blog posts
-            </span>{" "}
-            as part of the{" "}
-            <span className="font-bold capitalize">{planTypeName}</span> Plan.
+          <p className="mt-2 text-lg leading-8 text-gray-600 max-w-2xl text-center">
+            Upload your audio or video file and let our AI do the magic!
           </p>
-        )}
 
-        {/* Form or Upgrade Button */}
-        {isValidBasicPlan || isProPlan ? (
-          <div className="mt-6 w-full max-w-md">
-            <UploadForm />
+          {(planData.isBasicPlan || planData.isProPlan) && (
+            <p className="mt-2 text-lg leading-8 text-gray-600 max-w-2xl text-center">
+              You get{" "}
+              <span className="font-bold text-amber-600 bg-amber-100 px-2 py-1 rounded-md">
+                {planData.isBasicPlan ? "3" : "Unlimited"} blog posts
+              </span>{" "}
+              as part of the <span className="font-bold capitalize">{planData.planTypeName}</span> Plan.
+            </p>
+          )}
+
+          {isValidBasicPlan || planData.isProPlan ? <UploadForm /> : <UpgradeYourPlan />}
+          <UserButton /> {/* Show user profile and sign-out option */}
+        </SignedIn>
+
+        <SignedOut>
+          <div>
+            <h2>You are signed out!</h2>
+            <SignInButton /> {/* Show sign-in button */}
           </div>
-        ) : (
-          <div className="mt-6">
-            <UpgradeYourPlan />
-          </div>
-        )}
+        </SignedOut>
       </div>
     </div>
   );
