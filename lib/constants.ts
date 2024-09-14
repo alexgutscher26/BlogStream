@@ -26,7 +26,7 @@ export const plansMap = [
 ];
 
 export const ORIGIN_URL =
-  process.env.NODE_ENV === "production"
+  process.env.NODE_ENV === "development"
     ? "https://blog-stream-ten.vercel.app"
     : "http://localhost:3000";
 
