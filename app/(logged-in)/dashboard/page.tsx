@@ -6,6 +6,9 @@ import { doesUserExist, getPlanType, hasCancelledSubscription, updateUser } from
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';  // This ensures dynamic rendering in Next.js App Directory
+
 export default async function Dashboard() {
   try {
     const clerkUser = await currentUser();
